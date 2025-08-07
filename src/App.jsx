@@ -4,6 +4,10 @@ import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import { v4 as uuidv4 } from "uuid";
 import Header from "./components/Header";
+import {
+  BrowserRouter as Router,
+  Route,
+} from "react-router-dom/cjs/react-router-dom.min";
 
 const App = () => {
   // let message = "Hello World!";
@@ -52,17 +56,26 @@ const App = () => {
   };
 
   return (
-    <>
+    <Router>
       <div className="container">
         <Header />
-        <AddTask handleTaskAddition={handleTaskAddition} />
-        <Tasks
-          tasks={tasks}
-          handleTaskClick={handleTaskClick}
-          handleRemoveTask={handleRemoveTask}
+        <Route
+          path="/"
+          exact
+          render={() => (
+            <>
+              <AddTask handleTaskAddition={handleTaskAddition} />
+              <Tasks
+                tasks={tasks}
+                handleTaskClick={handleTaskClick}
+                handleRemoveTask={handleRemoveTask}
+              />
+            </>
+          )}
         />
+        <Route path="/details" exact render={() => <></>} />
       </div>
-    </>
+    </Router>
   );
 };
 
