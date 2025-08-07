@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 import "./styles/App.css";
 
@@ -11,20 +12,44 @@ const App = () => {
   // let message = "Hello World!";
   const [tasks, setTasks] = useState([
     {
-      id: 1,
+      id: uuidv4(),
       title: "Concluir o frontend",
       description:
         "Terminar de implementar o front end do To Do List, com informações de perfil e personalização",
       completed: false,
     },
     {
-      id: 2,
+      id: uuidv4(),
       title: "Integrar com o backend",
       description:
         "Integrar o front da aplicação To Do List com o backend em Java Spring",
       completed: false,
     },
   ]);
+
+  const hasFetched = useRef(false);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      if (hasFetched.current) return;
+
+      hasFetched.current = true;
+
+      const { data } = await axios.get(
+        "https://jsonplaceholder.cypress.io/todos?_limit=2"
+      );
+
+      const formattedData = data.map((task) => ({
+        id: task.id,
+        title: task.title,
+        description:
+          "Tarefa importada da WebAPI Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores magni dolorem libero sequi expedita ex dignissimos, neque dolore saepe voluptatum.",
+        completed: task.completed,
+      }));
+      setTasks((prevTasks) => [...prevTasks, ...formattedData]);
+    };
+    fetchTasks();
+  }, []); //lista vazia para executar so qnd o componente for montado
 
   const handleTaskAddition = (taskTitle) => {
     const newTask = [

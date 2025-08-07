@@ -9,6 +9,9 @@ const AddTask = ({ handleTaskAddition }) => {
     setInputData(e.target.value);
   };
   const handleAddTaskClick = () => {
+    if (inputData.trim() === "") {
+      alert("Preenchaos campos corretamente");
+    }
     handleTaskAddition(inputData);
     setInputData("");
   };
