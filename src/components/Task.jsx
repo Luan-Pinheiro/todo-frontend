@@ -19,7 +19,7 @@ const Task = ({ task, handleTaskClick, handleRemoveTask }) => {
       style={
         task.completed
           ? {
-              borderLeft: "6px solid chartreuse",
+              borderLeft: "6px solid rgba(184, 0, 0, 0.84)",
               textDecoration: "line-through",
             }
           : {}
