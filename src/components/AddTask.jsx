@@ -11,6 +11,8 @@ const AddTask = ({ handleTaskAddition }) => {
   const handleAddTaskClick = () => {
     if (inputData.trim() === "") {
       alert("Preenchaos campos corretamente");
+
+      return;
     }
     handleTaskAddition(inputData);
     setInputData("");
